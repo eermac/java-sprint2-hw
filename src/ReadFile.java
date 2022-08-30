@@ -1,11 +1,11 @@
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 
 public class ReadFile {
-    //Использовал полный путь, т.к. в моей системе не отрабатывает более короткий
-    String path = "java-sprint2-hw/resources/";
+    String path = "java-sprint2-hw" + File.separator + "resources" + File.separator ;
     public String readFileContentsOrNull(String path)
     {
         path = this.path + path;
