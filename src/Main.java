@@ -9,44 +9,61 @@ public class Main {
         String year = "2021";
         String[] month = {"01", "02", "03"};
 
-        printMenu(scanner, dataFile, year, month);
+        launchMenu(scanner, dataFile, year, month);
     }
 
-    static void printMenu(Scanner scanner, ReadFile dataFile, String year, String[] month) {
+    static void launchMenu(Scanner scanner, ReadFile dataFile, String year, String[] month) {
         System.out.println("Добро пожаловать");
         ArrayList<MonthlyReport> monthData = new ArrayList<>();
         YearlyReport yearlyData = new YearlyReport();
         ArrayList<YearlyReport> operationalDataYear = new ArrayList<>();
         ArrayList<String> fileContents = new ArrayList<>();
 
-        while (true) {
-            System.out.println("Выберите действие:");
-            System.out.println("1. Считать все месячные отчеты\n2. Считать годовой отчет\n3. Сверить отчеты\n4. Вывести информацию о всех месячных отчётах\n" +
-                    "5. Вывести информацию о годовом отчёте\n0. Выйти из приложения");
+        printMenu();
 
-            int userInput = scanner.nextInt();
+        int userInput = scanner.nextInt();
 
-            if (userInput == 1) {
-                readAndWriteMonthlyReport(month, fileContents, monthData, dataFile);
-            } else if (userInput == 2) {
-                readAndWriteYeralyReport(dataFile, year, yearlyData, operationalDataYear);
-            } else if (userInput == 3) {
-                if(monthData.size() == 0 || operationalDataYear.isEmpty()){
-                    System.out.println("Отчеты еще не считаны");
-                } else verifficationReport(monthData, operationalDataYear);
-            } else if (userInput == 4) {
-                if(monthData.size() == 0){
-                    System.out.println("Отчеты еще не считаны");
-                } else printMonthlyReport(month, monthData);
-            } else if (userInput == 5){
-                if(operationalDataYear.isEmpty()){
-                    System.out.println("Отчеты еще не считаны");
-                } else printYearlyReport(operationalDataYear);
-            } else if (userInput == 0) {
-                System.out.println("Приложение завершено");
-                break;
-            } else System.out.println("Такой команды нет, попробуйте еще раз");
+        while (userInput != 0) {
+            switch(userInput) {
+                case (1):
+                    readAndWriteMonthlyReport(month, fileContents, monthData, dataFile);
+                    break;
+                case (2):
+                    readAndWriteYeralyReport(dataFile, year, yearlyData, operationalDataYear);
+                    break;
+                case (3):
+                    if(monthData.size() == 0 || operationalDataYear.isEmpty()){
+                        System.out.println("Отчеты еще не считаны");
+                    } else verificationReport(monthData, operationalDataYear);
+                    break;
+                case (4):
+                    if(monthData.size() == 0){
+                        System.out.println("Отчеты еще не считаны");
+                    } else printMonthlyReport(month, monthData);
+                    break;
+                case (5):
+                    if(operationalDataYear.isEmpty()){
+                        System.out.println("Отчеты еще не считаны");
+                    } else printYearlyReport(operationalDataYear);
+                    break;
+                case (0):
+                    System.out.println("Приложение завершено");
+                    break;
+                default:
+                    System.out.println("Недопустимая команда, попробуйте другую");
+                    break;
+            }
+
+            printMenu();
+            userInput = scanner.nextInt();
         }
+        System.out.println("Программа завершена");
+    }
+
+    static void printMenu(){
+        System.out.println("Выберите действие:");
+        System.out.println("1. Считать все месячные отчеты\n2. Считать годовой отчет\n3. Сверить отчеты\n4. Вывести информацию о всех месячных отчётах\n" +
+                "5. Вывести информацию о годовом отчёте\n0. Выйти из приложения");
     }
 
     static void readAndWriteYeralyReport(ReadFile dataFile, String year, YearlyReport yearlyData, ArrayList<YearlyReport> operationalDataYear){
@@ -97,7 +114,7 @@ public class Main {
         }
     }
 
-    static void verifficationReport(ArrayList<MonthlyReport> monthData, ArrayList<YearlyReport> operationalDataYear){
+    static void verificationReport(ArrayList<MonthlyReport> monthData, ArrayList<YearlyReport> operationalDataYear){
         DataVerification verification = new DataVerification();
         System.out.println("Сверка данных трат");
         verification.checkData(monthData, operationalDataYear, 1);

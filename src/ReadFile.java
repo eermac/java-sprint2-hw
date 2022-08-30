@@ -5,7 +5,7 @@ import java.nio.file.Path;
 
 
 public class ReadFile {
-    String path = "java-sprint2-hw" + File.separator + "resources" + File.separator ;
+    String path = "resources/";
     public String readFileContentsOrNull(String path)
     {
         path = this.path + path;
